@@ -1,5 +1,0 @@
-```
-[root@ip-172-31-56-250 ~]# cat /var/kerberos/krb5kdc/kadm5.acl
-*/admin@SEBC.COM *
-cloudera-scm@SEBC.COM admilc
-```
