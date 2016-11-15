@@ -110,6 +110,29 @@ default via 10.155.22.193 dev eth0
 6
 ---
 ```
+sudo yum -y install dnsmasq
+/etc/init.d/dnsmasq start
+nano /etc/resolv.conf
+nameserver 127.0.0.1
+
 [root@r01n01 centos]# getent hosts r01n01
 10.234.222.139  r01n01.localdomain r01n01
+
+[root@r01n01 centos]# nslookup r01n01
+Server:		127.0.0.1
+Address:	127.0.0.1#53
+
+Name:	r01n01
+Address: 10.234.222.139
+
 ```
+7
+---
+```
+[root@r01n05 centos]# service nscd status
+nscd (pid 1355) is running...
+
+[root@r01n01 centos]# service ntpd status
+ntpd (pid  1434) is running...
+```
+
