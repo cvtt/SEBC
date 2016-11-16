@@ -2,41 +2,38 @@
 ----
 
 ```
-[root@r01n05 ~]# nano /proc/sys/vm/swappiness
-[root@r01n05 ~]# cat /proc/sys/vm/swappiness
+$ nano /proc/sys/vm/swappiness
+$ cat /proc/sys/vm/swappiness
 1
 ```
-[root@r01n05 ~]# grep vm. /etc/sysctl.conf
+$ grep vm. /etc/sysctl.conf
 vm.swappiness=1
 ```
 
 2
 ---
 ```
-[root@r01n04 centos]# nano /etc/fstab 
-/dev/xvdb      /data/disk02/    ext3    defaults
-/dev/xvdc      /data/disk03/    ext3    defaults
+$ nano /etc/fstab 
+/dev/xvdb      /data/disk01/    ext3    defaults
+/dev/xvdc      /data/disk02/    ext3    defaults
 
-[root@r01n04 centos]# mkdir -p /data/disk02
-[root@r01n04 centos]# mkdir -p /data/disk03
-[root@r01n04 centos]# mount -a
-
-
-[root@r01n04 centos]# lsblk
+$ mkdir -p /data/disk01
+$ mkdir -p /data/disk02
+$ mount -a
+$ lsblk
 NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-xvda    202:0    0    8G  0 disk 
-`-xvda1 202:1    0    8G  0 part /
-xvdb    202:16   0 37.5G  0 disk /data/disk02
-xvdc    202:32   0 37.5G  0 disk /data/disk03
+xvda    202:0    0   38G  0 disk 
+`-xvda1 202:1    0   38G  0 part /
+xvdb    202:16   0 37.5G  0 disk /data/disk01
+xvdc    202:32   0 37.5G  0 disk /data/disk02
 ```
 3
 ---
 ```
-root@r01n04 centos]# tune2fs -l /dev/xvdb
 tune2fs 1.41.12 (17-May-2010)
 Filesystem volume name:   <none>
 Last mounted on:          <not available>
-Filesystem UUID:          0ca2ab2d-0fc9-4932-b19b-db6f4528fb4d
+Filesystem UUID:          ba7526cb-f40c-44be-8f05-53adecd2f055
 Filesystem magic number:  0xEF53
 Filesystem revision #:    1 (dynamic)
 Filesystem features:      has_journal ext_attr resize_inode dir_index filetype needs_recovery sparse_super large_file
@@ -47,7 +44,7 @@ Errors behavior:          Continue
 Filesystem OS type:       Linux
 Inode count:              2457600
 Block count:              9828352
-Reserved block count:     491417
+**Reserved block count:     0**
 Free blocks:              9629045
 Free inodes:              2457589
 First block:              0
@@ -58,12 +55,12 @@ Blocks per group:         32768
 Fragments per group:      32768
 Inodes per group:         8192
 Inode blocks per group:   512
-Filesystem created:       Tue May 12 05:23:05 2015
-Last mount time:          Mon Nov 14 16:37:16 2016
-Last write time:          Mon Nov 14 16:37:16 2016
-Mount count:              3
+Filesystem created:       Sat May 23 06:43:53 2015
+Last mount time:          Tue Nov 15 22:05:51 2016
+Last write time:          Tue Nov 15 22:05:51 2016
+Mount count:              2
 Maximum mount count:      -1
-Last checked:             Tue May 12 05:23:05 2015
+Last checked:             Sat May 23 06:43:53 2015
 Check interval:           0 (<none>)
 Reserved blocks uid:      0 (user root)
 Reserved blocks gid:      0 (group root)
@@ -73,15 +70,15 @@ Required extra isize:     28
 Desired extra isize:      28
 Journal inode:            8
 Default directory hash:   half_md4
-Directory Hash Seed:      f659a871-88ef-4f93-b8b4-da50c6bebcac
+Directory Hash Seed:      a6a82b05-f8ce-437c-b30e-8a7fe85197b9
 Journal backup:           inode blocks
 ```
 4
 ---
 ```
-root@r01n05 centos]# echo never > /sys/kernel/mm/transparent_hugepage/enabled
-root@r01n05 centos]# echo never > /sys/kernel/mm/transparent_hugepage/defrag
-root@r01n05 centos]# nano /etc/rc.local 
+$ echo never > /sys/kernel/mm/transparent_hugepage/enabled
+$ echo never > /sys/kernel/mm/transparent_hugepage/defrag
+$ nano /etc/rc.local 
 if test -f /sys/kernel/mm/redhat_transparent_hugepage/enabled; then
        echo never > /sys/kernel/mm/redhat_transparent_hugepage/enabled
  fi
@@ -92,19 +89,41 @@ if test -f /sys/kernel/mm/redhat_transparent_hugepage/enabled; then
  5
  ---
 ```
-root@r01n02 centos]# ip route
-10.155.22.192/26 dev eth0  proto kernel  scope link  src 10.155.22.240 
-default via 10.155.22.193 dev eth0 
+[root@ip-10-145-13-70 centos]# ip route
+10.145.13.64/26 dev eth0  proto kernel  scope link  src 10.145.13.70 
+default via 10.145.13.65 dev eth0
 
-[root@r01n02 centos]#  cat /etc/hosts
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+[root@ip-10-145-13-70 centos]# cat /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE="eth0"
+BOOTPROTO="dhcp"
+IPV6INIT="yes"
+MTU="1500"
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+TYPE="Ethernet"
+UUID="52658143-fe10-477a-861f-410a6e8f57e4"
 
-10.234.222.139 r01n01.localdomain r01n01
-10.155.22.240 r01n02.localdomain r01n02
-10.71.202.220 r01n03.localdomain r01n03
-10.171.134.22 r01n04.localdomain r01n04
-10.168.156.46 r01n05.localdomain r01n05
+[root@ip-10-145-13-70 centos]# cat /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE="eth0"
+BOOTPROTO="dhcp"
+IPV6INIT="yes"
+MTU="1500"
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+TYPE="Ethernet"
+UUID="52658143-fe10-477a-861f-410a6e8f57e4"
+[root@ip-10-145-13-70 centos]# İFCONFİG ETH0
+bash: İFCONFİG: command not found
+[root@ip-10-145-13-70 centos]# ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 22:00:0B:0D:13:76  
+          inet addr:10.145.13.70  Bcast:10.145.13.127  Mask:255.255.255.192
+          inet6 addr: fe80::2000:bff:fe0d:1376/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:164694 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:59062 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:207113007 (197.5 MiB)  TX bytes:18697317 (17.8 MiB)
+          Interrupt:143 
 ```
 
 6
@@ -115,24 +134,26 @@ sudo yum -y install dnsmasq
 nano /etc/resolv.conf
 nameserver 127.0.0.1
 
-[root@r01n01 centos]# getent hosts r01n01
-10.234.222.139  r01n01.localdomain r01n01
+[root@ip-10-145-13-70 centos]# getent hosts ip-10-145-13-70.ec2.internal
+10.145.13.70    ip-10-145-13-70.ec2.internal
 
-[root@r01n01 centos]# nslookup r01n01
-Server:		127.0.0.1
-Address:	127.0.0.1#53
+[root@ip-10-145-13-70 centos]# nslookup ip-10-145-13-70.ec2.internal
+Server:		172.16.0.23
+Address:	172.16.0.23#53
 
-Name:	r01n01
-Address: 10.234.222.139
+Non-authoritative answer:
+Name:	ip-10-145-13-70.ec2.internal
+Address: 10.145.13.70
+
 
 ```
 7
 ---
 ```
-[root@r01n05 centos]# service nscd status
+$ service nscd status
 nscd (pid 1355) is running...
 
-[root@r01n01 centos]# service ntpd status
+$ service ntpd status
 ntpd (pid  1434) is running...
 ```
 

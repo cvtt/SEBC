@@ -1,30 +1,14 @@
-```
+ec2-54-167-17-133.compute-1.amazonaws.com
+54.167.17.133
 
-ec2-54-167-37-149.compute-1.amazonaws.com
-54.167.37.149
-HOSTNAME=r01n01.localdomain
-```
+ec2-54-242-87-70.compute-1.amazonaws.com
+54.242.87.70
 
-```
-ec2-54-221-28-136.compute-1.amazonaws.com
-54.221.28.136
-HOSTNAME=r01n02.localdomain
-```
+ec2-54-91-40-176.compute-1.amazonaws.com
+54.91.40.176
 
-```
-ec2-54-159-54-224.compute-1.amazonaws.com
-54.159.54.224
-HOSTNAME=r01n03.localdomain
-```
+ec2-54-163-46-98.compute-1.amazonaws.com
+54.163.46.98
 
-```
-ec2-54-83-68-249.compute-1.amazonaws.com
-54.83.68.249
-HOSTNAME=r01n04.localdomain
-```
-
-```
-ec2-54-221-55-207.compute-1.amazonaws.com
-54.221.55.207
-HOSTNAME=r01n05.localdomain
-```
+ec2-54-234-232-251.compute-1.amazonaws.com
+54.234.232.251
