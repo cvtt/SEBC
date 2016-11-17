@@ -40,6 +40,22 @@ Status
 
 ```
 
-
-
+[centos@ip-10-145-13-70 ~]$ curl -X GET -u cvtt:cloudera 'http://ip-10-145-13-70:7180/api/v1/clusters/CVTT/services/hive'
+{
+  "name" : "hive",
+  "type" : "HIVE",
+  "clusterRef" : {
+    "clusterName" : "cluster"
+  },
+  "serviceUrl" : "http://ip-10-145-13-70.ec2.internal:7180/cmf/serviceRedirect/hive",
+  "serviceState" : "STOPPED",
+  "healthSummary" : "DISABLED",
+  "healthChecks" : [ {
+    "name" : "HIVE_HIVEMETASTORES_HEALTHY",
+    "summary" : "DISABLED"
+  }, {
+    "name" : "HIVE_HIVESERVER2S_HEALTHY",
+    "summary" : "DISABLED"
+  } ],
+  "configStale" : false
 ```
